@@ -38,3 +38,7 @@ build
 build/*
 
 .idea/
+
+# Please add these libraries
+./src/include/libAO/
+./src/include/liblsl/
