@@ -6,6 +6,9 @@
 
 ## Contributor (sorted alphabetically)
 
+- **[Aron Distelzweig](https://github.com/arndz)**
+  - Implementation
+
 - **[Matthias Dold](https://github.com/matthiasdold)**
   - Design
   - Reworking build chain to `make` from `cmake`
