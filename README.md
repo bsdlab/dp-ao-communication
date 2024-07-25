@@ -22,6 +22,10 @@ Also make sure that you have the `libAO` and `liblsl` libraries in the `src/incl
 
 Building should then work with just using `make`.
 
-# Caveat
+### Caveat
 
 This module is reworked currently. There is a short-coming with the sampling rate which is specified at 2000Hz, event though we usually have data streamed/incoming with 22_000Hz. The program broke for unknown reasons with a higher sampling rate specified. Note that this parameter will not impact the real sampling rate at which the data is incoming and streamed to LSL, but the LSL stream will have a wrong sampling rate shown for the nominal_srate.
+
+#### The Dareplane Overview
+
+[Back to the Dareplane landing page](https://github.com/bsdlab/Dareplane)
