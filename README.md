@@ -1,42 +1,23 @@
 # AO Communication APP
+
 This app communicates with the API of the Alpha Omega machine and provides
-functionality for:
-1. Stream data from the AOs API buffer
-2. Control the stimulation
 
-## Building
-Note the API requires windows specific headers!
-### For Windows
-1. download powershell:
-	https://sourceforge.net/projects/powershell.mirror/files/latest/download
-2. download python (add python to system path, can be done when installing)
-	https://www.python.org/downloads/
-3. Install Chocolatey (https://chocolatey.org/install):
-	Execute in powershell with admin premissions:
-		Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-4. Run in powershell:
-	choco install make
-5. Install cmake (cmake-3.24.0-rc3-windows-x86_64.msi):
-	https://cmake.org/download/
-	Add cmake to system path (can be done when installing)
-6. Download MinGW-64, unzip copy mingw64 folder into C:/:
-	https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-posix/sjlj/x86_64-8.1.0-release-posix-sjlj-rt_v6-rev0.7z/download
+## Build
 
-7. Add C:\mingw64\bin to system path
+Start with adjusting the `Makefile`, especially the following lines:
 
-8. Build lsl -> not need -> just copy https://github.com/sccn/liblsl/releases/download/v1.16.0/lslexamples-1.16.0-Win_amd64.zip into the directory and copy dll into build of AO_API
-	1. Remove CMakeCache.txt
-	2. cmake -S .  -B . -G "MinGW Makefiles"
-	3. make
+```Makefile
 
-USE LSL-1.16 VERSION -> 1.15 can not handle multiple streams!!!
+#### Includes
+# Path to your python installation / Python.h file
+INCS = C:\Users\bsdlab\anaconda3\include
 
-9. build AO API
-    1. Remove build/CMakeCache.txt
-    2. cmake -S .  -B ./build -G "MinGW Makefiles"
-    3. cd build/
-    4. make
+# Dependencies from this project
+INCS += ./src/include/libAO/include
+INCS += ./src/include/liblsl/include
 
-## TODOS
-- [ ] restructure directory
-- [ ] remove python dependencies
+```
+
+Also make sure that you have the `libAO` and `liblsl` libraries in the `src/include` directory. `libAO` is provided by Alpha Omega and [`liblsl`](https://github.com/sccn/liblsl) is just downloaded from the [LSL git repo](https://github.com/sccn/liblsl).
+
+Building should then work with just using `make`.
