@@ -77,13 +77,11 @@ int main(int argc, char *argv[]) {
              config["Server"]["port"].as_integer()->get(),
              std::ref(stop_thread));
 
-  // std::atomic_bool stop_thread = false;
-  // std::thread tcp_th(
-  //     run_server, config["Server"]["ip"].as_string()->get().c_str(),
-  //     config["Server"]["port"].as_integer()->get(),
-  //     std::ref(stop_thread),
-  //     config["Server"]["sleep_ms"].as_integer()->get());
-  //
+  std::thread tcp_th(
+      run_server, config["Server"]["ip"].as_string()->get().c_str(),
+      config["Server"]["port"].as_integer()->get(), std::ref(stop_thread),
+      config["Server"]["sleep_ms"].as_integer()->get());
+
   //  // Run the data loopre
   //  std::cout << "Starting to stream to LSL with " << (1000 /
   //  refresh_rate_ms)

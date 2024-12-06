@@ -13,6 +13,7 @@
 class Receiver {
 public:
   Receiver(const char *ip_addr, int port);
+  ~Receiver();
   std::tuple<char *, int> ReceiveMessage();
 
 private:
@@ -76,12 +77,11 @@ Receiver::Receiver(const char *ip_addr, int port) {
   }
 
   std::cout << "Connection established!" << std::endl;
-
-  _recvSocket = socket(AF_INET, SOCK_STREAM, 0);
-  if (_recvSocket == -1) {
-    std::cerr << "Error creating socket: " << strerror(errno) << std::endl;
-    return;
-  }
+}
+Receiver::~Receiver() {
+  closesocket(_sendSocket);
+  closesocket(_recvSocket);
+  WSACleanup();
 }
 
 //_____________________________________________________________________________
@@ -141,6 +141,8 @@ std::tuple<char *, int> Receiver::processCommand(char *message) {
   size_t mLen = strlen(message) + 1;
   char *deepcopy_msg = new char[mLen];
   strcpy_s(deepcopy_msg, mLen, message);
+
+  std::cout << "Received message: " << message << std::endl;
 
   // const char *delimiter = "|";
 
