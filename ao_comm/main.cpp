@@ -45,9 +45,6 @@ int main(int argc, char *argv[]) {
   // Loop through the TOML array and assign values to the regular int[] array
   for (int i = 0; i < num_channels; ++i) {
     channels_arr[i] = config["AO"]["channels"][i].as_integer()->get();
-    // std::cout << "Setting channels_arr[" << i << "] with "
-    //           << config["AO"]["channels"][i].as_integer()->get() <<
-    //           std::endl;
   }
 
   std::cout << "Trying to start LSL stream" << std::endl;
@@ -58,40 +55,33 @@ int main(int argc, char *argv[]) {
             << "\n   sampling_rate_hz:" << sampling_rate_hz
             << "\n   buffer_size_s:" << buffer_size_lsl_s << std::endl;
 
-  // auto info = lsl::stream_info();
+  lsl::stream_info dataOutletInfo =
+      lsl::stream_info(stream_name, "LFP_ECOG_EOG", num_channels,
+                       sampling_rate_hz, lsl::cf_float32, "id_ao_stream");
 
-  // lsl::stream_info dataOutletInfo =
-  //     lsl::stream_info(stream_name, "EEG", num_channels, sampling_rate_hz,
-  //                      lsl::cf_float32, "id_ao_stream");
+  lsl::stream_outlet *data_lsl_outlet =
+      new lsl::stream_outlet(dataOutletInfo, 1, buffer_size_lsl_s);
 
-  // lsl::stream_outlet *data_lsl_outlet =
-  //     new lsl::stream_outlet(dataOutletInfo, 1, buffer_size_lsl_s);
-
-  // std::cout << "LSL connection started - outlet at " << data_lsl_outlet
-  //           << std::endl;
+  std::cout << "LSL connection started - outlet at " << data_lsl_outlet
+            << std::endl;
 
   // Spawn the TCP socket in separate thread
-  //
   std::atomic_bool stop_thread = false;
-  run_server(config["Server"]["ip"].as_string()->get().c_str(),
-             config["Server"]["port"].as_integer()->get(),
-             std::ref(stop_thread));
-
   std::thread tcp_th(
       run_server, config["Server"]["ip"].as_string()->get().c_str(),
       config["Server"]["port"].as_integer()->get(), std::ref(stop_thread),
       config["Server"]["sleep_ms"].as_integer()->get());
 
   //  // Run the data loopre
-  //  std::cout << "Starting to stream to LSL with " << (1000 /
-  //  refresh_rate_ms)
-  //            << "Hz intervals" << std::endl;
-  //
-  //  stream_ao_data_to_lsl(data_lsl_outlet, channels_arr, num_channels,
-  //                        refresh_rate_ms, buffer_size_ao_ms, 10);
-  //
-  //  // // Clean up
-  //  delete data_lsl_outlet;
+  std::cout << "Starting to stream to LSL with " << (1000 / refresh_rate_ms)
+            << "Hz intervals" << std::endl;
+
+  stream_ao_data_to_lsl(data_lsl_outlet, channels_arr, num_channels,
+                        refresh_rate_ms, buffer_size_ao_ms, 10);
+
+  // // Clean up
+  tcp_th.join();
+  delete data_lsl_outlet;
 
   return 0;
 }
