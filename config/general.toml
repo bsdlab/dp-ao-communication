@@ -45,4 +45,4 @@ max_buffer_size_s = 100              # LSL default is 360, but 100 should be suf
 [Server]
 ip = "127.0.0.1"
 port = 8081
-sleep_ms = 1     # sleep in the server loop
+sleep_ms = 100   # sleep in the server loop
