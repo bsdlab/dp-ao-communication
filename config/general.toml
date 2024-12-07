@@ -1,31 +1,29 @@
-# NOTE: We use a very limited custom YAML parser (very light weight), which would not be able to interpret the lists correctly if specified as []
-#       Please work within the current key value style if you adjust
 [AO]
 channels = [ # the channels to query
   10272, # first box contact 1
   10273,
-  # 10274,
-  # 10275,
-  # 10276,
-  # 10277,
-  # 10278,
-  # 10279,
-  # 10280, # first box contact 9
-  # 10281,
-  # 10282,
-  # 10283,
-  # 10284,
-  # 10285,
-  # 10286,
-  # 10287,
-  # 10288, # second box contact 1
-  # 10289,
-  # 10290,
-  # 10291,
-  # 10292,
-  # 10293,
-  # 10294,
-  # 10295,
+  10274,
+  10275,
+  10276,
+  10277,
+  10278,
+  10279,
+  10280, # first box contact 9
+  10281,
+  10282,
+  10283,
+  10284,
+  10285,
+  10286,
+  10287,
+  10288, # second box contact 1
+  10289,
+  10290,
+  10291,
+  10292,
+  10293,
+  10294,
+  10295,
 ]
 refresh_rate_ms = 10 # defines a sleep in the main loop --> note that this will lead to error code 8 if it is faster than 15ms for the return of GetAlignedData (error for empty it seems)
 buffer_size_ms = 100000
