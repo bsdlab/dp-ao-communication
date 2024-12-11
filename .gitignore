@@ -40,5 +40,7 @@ build/*
 .idea/
 
 # Please add these libraries
-src/include/libAO/
-src/include/liblsl/
+ao_comm_deps
+ao_comm_deps/*
+
+.cache

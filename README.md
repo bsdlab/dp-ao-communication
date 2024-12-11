@@ -4,6 +4,10 @@ This app communicates with the API of the Alpha Omega machine and provides
 
 ## Build
 
+We are now using [meson]() approach for setting up the build of this app.
+
+
+
 Start with adjusting the `Makefile`, especially the following lines:
 
 ```Makefile
@@ -29,3 +33,8 @@ This module is reworked currently. There is a short-coming with the sampling rat
 #### The Dareplane Overview
 
 [Back to the Dareplane landing page](https://github.com/bsdlab/Dareplane)
+
+
+#### Trouble shooting
+
+- App compiles but does not start and not print anything: This can be the case if you do not have the `lsl.dll` in the main directory! Just linking against the static library is not enough!
