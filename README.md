@@ -4,7 +4,7 @@ This app communicates with the API of the Alpha Omega machine and provides
 
 ## Build
 
-We are now using [meson]() approach for setting up the build of this app.
+We are now using [meson](https://mesonbuild.com/) approach for setting up the build of this app.
 
 
 ### Caveat
